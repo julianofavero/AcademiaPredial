@@ -26,8 +26,8 @@ public class ClienteDAO {
 	private static final String INSERIR_CLIENTE = "INSERT INTO cliente" + " (nome, apartamento, dataReserva, horario) VALUES " + " (?, ?, ?, ?);";
 	private static final String SELECIONAR_CLIENTE = "SELECT codigo, nome, apartamento, dataReserva, horario FROM cliente WHERE codigo = ?";
 	private static final String SELECIONAR_CLIENTES = "SELECT * FROM cliente";
-	private static final String DELETAR_USUARIO = "DELETE FROM cliente WHERE codigo = ?;";
-	private static final String DELETAR_CLIENTE = "UPDATE cliente SET nome = ?, apartamento = ? , dataReserva = ? , horario = ? WHERE codigo = ?;";
+	private static final String DELETAR_CLIENTE = "DELETE FROM cliente WHERE codigo = ?;";
+	private static final String ATUALIZAR_CLIENTE = "UPDATE cliente SET nome = ?, apartamento = ? , dataReserva = ? , horario = ? WHERE codigo = ?;";
 
 	public ClienteDAO() {
 	}
@@ -80,6 +80,7 @@ public class ClienteDAO {
 				String dataReserva = resultado.getString("dataReserva");
 				String horario = resultado.getString("horario");
 				cliente = new Cliente(codigo, nome, apartamento, dataReserva, horario);
+				conexao.close();
 			}
 		} catch (SQLException erro) {
 			printSQLException(erro);
@@ -87,8 +88,8 @@ public class ClienteDAO {
 		return cliente;
 	}
 
-	public List<Object> selecionarClientes() {
-		List<Object> usuarios = new ArrayList<>();
+	public List selecionarClientes() {
+		List clientes = new ArrayList<>();
 		// Código boilerplate
 		// Etapa 1: estabelece a conexão
 		try (Connection conexao = getConnection();
@@ -104,18 +105,18 @@ public class ClienteDAO {
 				String apartamento = resultado.getString("apartamento");
 				String dataReserva = resultado.getString("dataReserva");
 				String horario = resultado.getString("horario");
-				usuarios.add(new Cliente(codigo, nome, apartamento, dataReserva, horario));
+				clientes.add(new Cliente(codigo, nome, apartamento, dataReserva, horario));
 			}
 		} catch (SQLException erro) {
 			printSQLException(erro);
 		}
-		return usuarios;
+		return clientes;
 	}
 
 	public boolean deletarCliente(int codigo) throws SQLException {
 		boolean registroDeletado;
 		try (Connection conexao = getConnection();
-				PreparedStatement executarComando = conexao.prepareStatement(DELETAR_USUARIO);) {
+				PreparedStatement executarComando = conexao.prepareStatement(DELETAR_CLIENTE);) {
 			executarComando.setInt(1, codigo);
 			System.out.println(executarComando);
 			registroDeletado = executarComando.executeUpdate() > 0;
@@ -126,12 +127,12 @@ public class ClienteDAO {
 	public boolean atualizarCliente(Cliente cliente) throws SQLException {
 		boolean registroAtualizado;
 		try (Connection connection = getConnection();
-				PreparedStatement executarComando = connection.prepareStatement(DELETAR_CLIENTE);) {
+				PreparedStatement executarComando = connection.prepareStatement(ATUALIZAR_CLIENTE);) {
 			executarComando.setString(1, cliente.getNome());
 			executarComando.setString(2, cliente.getApartamento());
 			executarComando.setString(3, cliente.getDataReserva());
 			executarComando.setString(4, cliente.getHorario());
-			executarComando.setString(5, cliente.getcodigo());
+			executarComando.setInt(5, cliente.getCodigo());
 			registroAtualizado = executarComando.executeUpdate() > 0;
 		}
 		return registroAtualizado;

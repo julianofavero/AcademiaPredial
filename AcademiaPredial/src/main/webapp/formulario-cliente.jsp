@@ -18,7 +18,7 @@
 			</div>
 			<ul class="navbar-nav">
 				<li><a href="<%=request.getContextPath()%>/listagem"
-                       class="nav-link">Usuários</a></li>
+                       class="nav-link">Clientes</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -26,46 +26,46 @@
 	<div class="container col-md-5">
 		<div class="card">
 			<div class="card-body">
-				<c:if test="${usuario != null}">
+				<c:if test="${cliente != null}">
 					<form action="atualizar" method="post">
 				</c:if>
-				<c:if test="${usuario == null}">
+				<c:if test="${cliente == null}">
 					<form action="inserir" method="post">
 				</c:if>
 				<caption>
 					<h2>
-						<c:if test="${usuario != null}">
-            			Editar Usuário
+						<c:if test="${cliente != null}">
+            			Editar Cliente
             			<hr>
 						</c:if>
-						<c:if test="${usuario == null}">
-            			Adicionar Usuário
+						<c:if test="${cliente == null}">
+            			Adicionar cliente
             			<hr>
 						</c:if>
 					</h2>
 				</caption>
-				<c:if test="${usuario != null}">
+				<c:if test="${cliente != null}">
 					<input type="hidden" name="codigo"
-                           value="<c:out value='${usuario.codigo}' />" />
+                           value="<c:out value='${cliente.codigo}' />" />
 				</c:if>                                  
                 <fieldset class="form-group">                                  
 					<label>Nome</label> <input type="text"
-                                                  value="<c:out value='${usuario.nome}' />" class="form-control"
+                                                  value="<c:out value='${cliente.nome}' />" class="form-control"
                                                   name="nome" required="required">
 				</fieldset>
 				<fieldset class="form-group">
 					<label>Apartamento</label> <input type="text"
-                                                 value="<c:out value='${usuario.apartamento}' />" class="form-control"
+                                                 value="<c:out value='${cliente.apartamento}' />" class="form-control"
                                                  name="apartamento" required="required">
 				</fieldset>
 				<fieldset class="form-group">
 					<label>Data</label> <input type="text"
-                                                  value="<c:out value='${usuario.dataReserva}' />" class="form-control"
+                                                  value="<c:out value='${cliente.dataReserva}' />" class="form-control"
                                                   name="dataReserva" required="required"><fieldset class="form-group">
                 </fieldset>                                  
 				<fieldset class="form-group">
 					<label>Horario</label> <input type="text"
-                                               value="<c:out value='${usuario.horario}' />" class="form-control"
+                                               value="<c:out value='${cliente.horario}' />" class="form-control"
                                                name="horario" required="required">
                 </fieldset> 
 				<button type="submit" class="btn btn-success btn-sm">Salvar</button>

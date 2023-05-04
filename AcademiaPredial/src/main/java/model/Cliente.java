@@ -1,7 +1,7 @@
 package model;
 
 public class Cliente {
-	protected String codigo;
+	protected int codigo;
 	protected String nome;
 	protected String apartamento;
 	protected String dataReserva;
@@ -21,7 +21,7 @@ public class Cliente {
 
 	public Cliente(int codigo, String nome, String dataReserva, String horario, String apartamento) {
 		super();
-		this.codigo = apartamento;
+		this.codigo = codigo;
 		this.nome = nome;
 		this.apartamento = apartamento;
 		this.dataReserva = dataReserva;
@@ -29,11 +29,11 @@ public class Cliente {
 		
 	}
 
-	public String getcodigo() {
+	public int getCodigo() {
 		return codigo;
 	}
 
-	public void setcodigo(String codigo) {
+	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
 
